@@ -26,6 +26,8 @@ import com.android.launcher3.compat.AlphabeticIndexCompat;
 import com.android.launcher3.compat.UserHandleCompat;
 import com.android.launcher3.model.AppNameComparator;
 import com.android.launcher3.util.ComponentKey;
+import com.github.promeg.pinyinhelper.Pinyin;
+
 import cyanogenmod.providers.CMSettings;
 
 import java.util.ArrayList;
@@ -675,8 +677,12 @@ public class AlphabeticalAppsList {
     private String getAndUpdateCachedSectionName(CharSequence title) {
         String sectionName = mCachedSectionNames.get(title);
         if (sectionName == null) {
-            // TODO: 2017/10/26 convert title to pinyin
-            sectionName = mIndexer.computeSectionName(title);
+            char firstChar = title.charAt(0);
+            if (Pinyin.isChinese(firstChar)){
+                sectionName = mIndexer.computeSectionName(Pinyin.toPinyin(firstChar));
+            }else{
+                sectionName = mIndexer.computeSectionName(title);
+            }
             mCachedSectionNames.put(title, sectionName);
         }
         return sectionName;

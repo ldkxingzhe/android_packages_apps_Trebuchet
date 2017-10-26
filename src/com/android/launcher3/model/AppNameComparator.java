@@ -20,6 +20,7 @@ import android.content.Context;
 import com.android.launcher3.AppInfo;
 import com.android.launcher3.ItemInfo;
 import com.android.launcher3.util.Thunk;
+import com.github.promeg.pinyinhelper.Pinyin;
 
 import java.text.Collator;
 import java.util.Comparator;
@@ -41,8 +42,9 @@ public class AppNameComparator {
             @Override
             public final int compare(ItemInfo a, ItemInfo b) {
                 // Order by the title in the current locale
-                // TODO: 2017/10/26 convert title to pinyin
-                int result = compareTitles(a.title.toString(), b.title.toString());
+                String titleA = convertToPinyinIfNeed(a.title.toString());
+                String titleB = convertToPinyinIfNeed(b.title.toString());
+                int result = compareTitles(titleA, titleB);
                 if (result == 0 && a instanceof AppInfo && b instanceof AppInfo) {
                     AppInfo aAppInfo = (AppInfo) a;
                     AppInfo bAppInfo = (AppInfo) b;
@@ -63,6 +65,16 @@ public class AppNameComparator {
                 return compareTitles(o1, o2);
             }
         };
+    }
+
+    // if title is chinese, convert it to pinyin
+    private String convertToPinyinIfNeed(String title){
+        char firstChar = title.charAt(0);
+        if (Pinyin.isChinese(firstChar)){
+            return Pinyin.toPinyin(firstChar);
+        }else{
+            return title;
+        }
     }
 
     /**
