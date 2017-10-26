@@ -675,6 +675,7 @@ public class AlphabeticalAppsList {
     private String getAndUpdateCachedSectionName(CharSequence title) {
         String sectionName = mCachedSectionNames.get(title);
         if (sectionName == null) {
+            // TODO: 2017/10/26 convert title to pinyin
             sectionName = mIndexer.computeSectionName(title);
             mCachedSectionNames.put(title, sectionName);
         }

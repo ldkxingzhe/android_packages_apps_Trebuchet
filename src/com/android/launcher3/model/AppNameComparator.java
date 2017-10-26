@@ -41,6 +41,7 @@ public class AppNameComparator {
             @Override
             public final int compare(ItemInfo a, ItemInfo b) {
                 // Order by the title in the current locale
+                // TODO: 2017/10/26 convert title to pinyin
                 int result = compareTitles(a.title.toString(), b.title.toString());
                 if (result == 0 && a instanceof AppInfo && b instanceof AppInfo) {
                     AppInfo aAppInfo = (AppInfo) a;
