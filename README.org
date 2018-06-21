@@ -1,0 +1,3 @@
+#+TITLE: LineageOS 的启动器
+
+仅对其cm-14.1 与lineage-15.1进行了适配, 另外cm-14.1已不再与上游同步， 同步将放在lineage-15.1中进行
